@@ -8,7 +8,8 @@ Setting the homepage via keypresses in the Samsung Browser on a Samsung Galaxy S
 
 Save as a bat file, pass the URL as the first argument.
 
-```adb -d shell am start -n com.sec.android.app.sbrowser/.preferences.Settings
+```
+adb -d shell am start -n com.sec.android.app.sbrowser/.preferences.Settings
 
 timeout 2
 
