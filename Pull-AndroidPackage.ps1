@@ -3,7 +3,24 @@ param(
 )
 
 $PackageManager = adb shell "pm list packages -f | grep $PackageName"
-[void]($PackageManager -match "package:(.*)=$PackageName")
-$PackagePath = $Matches[1]
+If ($null -eq $PackageManager) {
+    Write-Error -Message "Could not find package: $PackageName"
+    Exit
+} Else {
+    [void]($PackageManager -match "package:(.*)=$PackageName")
+    $PackagePath = $Matches[1]
 
-adb pull $PackagePath ($PackageName+'.apk')
+    $DumpSys = adb shell "dumpsys package $PackageName | grep versionName"
+    [void]($DumpSys -match "versionName=(.*)")
+    $PackageVersion = $Matches[1]
+
+    If ($False -eq (Test-Path $PackageName)) {
+        [void](New-Item -ItemType Directory -Name $PackageName)
+    }
+
+    If ($False -eq (Test-Path "$PackageName\$PackageVersion")) {
+        [void](New-Item -ItemType Directory -Name ("$PackageName\$PackageVersion"))
+    }
+
+    adb pull $PackagePath ("$PackageName\$PackageVersion\$PackageName.apk")
+}
