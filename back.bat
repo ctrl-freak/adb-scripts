@@ -1,1 +1,0 @@
-@adb -d shell input keyevent 4
