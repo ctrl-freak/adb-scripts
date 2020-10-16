@@ -1,0 +1,1 @@
+$ENV:Path += ";C:\Android\platform-tools"
