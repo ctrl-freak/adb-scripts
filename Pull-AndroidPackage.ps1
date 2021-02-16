@@ -15,10 +15,12 @@ If ($null -eq $PackageManager) {
     $PackageVersion = $Matches[1]
 
     If ($False -eq (Test-Path $PackageName)) {
+        Write-Output "Creating directory: $PackageName"
         [void](New-Item -ItemType Directory -Name $PackageName)
     }
 
     If ($False -eq (Test-Path "$PackageName\$PackageVersion")) {
+        Write-Output "Creating directory: $PackageName\$PackageVersion"
         [void](New-Item -ItemType Directory -Name ("$PackageName\$PackageVersion"))
     }
 
